@@ -24,11 +24,17 @@ class Home extends StatelessWidget {
     final sizeX = MediaQuery.of(context).size.width;
     final sizeY = MediaQuery.of(context).size.height;
     return Container(
-        width: sizeX,
-        height: sizeY,
-        child: ListView(
-          children: showContacts(),
-        ));
+      width: sizeX,
+      height: sizeY,
+      child: GridView.count(
+        scrollDirection: Axis.vertical,
+        crossAxisCount: 3,
+        children: createSquares(50),
+        mainAxisSpacing: 5.0,
+        crossAxisSpacing: 5.0,
+        padding: EdgeInsets.all(5.0),
+      ),
+    );
   }
 
   List<Widget> createSquares(int numSquares) {
