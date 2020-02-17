@@ -6,10 +6,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Stack',
+      title: 'ListView',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Stack'),
+          title: Text('Contacts'),
         ),
         backgroundColor: Colors.indigo[100],
         body: Home(),
@@ -24,15 +24,11 @@ class Home extends StatelessWidget {
     final sizeX = MediaQuery.of(context).size.width;
     final sizeY = MediaQuery.of(context).size.height;
     return Container(
-      width: sizeX,
-      height: sizeY,
-      child: ListView.separated(
-        itemCount: 25,
-        itemBuilder: (context, index) => createSquare(index),
-        separatorBuilder: (context, index) => createSeparator(index),
-        scrollDirection: Axis.vertical,
-      ),
-    );
+        width: sizeX,
+        height: sizeY,
+        child: ListView(
+          children: showContacts(),
+        ));
   }
 
   List<Widget> createSquares(int numSquares) {
@@ -68,7 +64,7 @@ class Home extends StatelessWidget {
       Colors.lightBlue
     ];
     Container square = Container(
-      color: colors[i % 5],
+      color: colors[position % 5],
       width: 100.0,
       height: 100.0,
       child: Text(position.toString()),
@@ -140,4 +136,48 @@ class Home extends StatelessWidget {
     layoutChildren.add(buttonOrder);
     return layoutChildren;
   }
+
+  List<Contact> buildContacts() {
+    List<Contact> contacts = List<Contact>();
+    contacts.add(
+        Contact('Sami Al-Jamal', 'Brown Bear', Icons.sentiment_very_satisfied));
+    contacts.add(Contact('Molly New', 'Bumble', Icons.sentiment_satisfied));
+    contacts.add(Contact('Chelsea Molina', 'Ocho', Icons.sentiment_satisfied));
+    contacts.add(Contact('William Molina', 'Bear', Icons.sentiment_satisfied));
+    contacts.add(Contact(
+        'Margaret Al-Jamal', 'Mama Meg', Icons.sentiment_very_dissatisfied));
+    contacts.add(
+        Contact('Mahmoud Al-Jamal', 'Abu Sami', Icons.sentiment_dissatisfied));
+    return contacts;
+  }
+
+  List<ListTile> showContacts() {
+    List<Contact> contacts = buildContacts();
+    for (int i = 0; i < 20; i++) {
+      contacts.addAll(buildContacts());
+    }
+    List<ListTile> list = List<ListTile>();
+    contacts.forEach((contact) {
+      list.add(ListTile(
+        title: Text(contact.name),
+        subtitle: Text(contact.nickname),
+        leading: CircleAvatar(
+          child: Icon(contact.icon),
+          backgroundColor: Colors.amber[600],
+        ),
+        trailing: Icon(
+          Icons.keyboard_arrow_right,
+        ),
+        onTap: () => true,
+      ));
+    });
+    return list;
+  }
+}
+
+class Contact {
+  String name;
+  String nickname;
+  IconData icon;
+  Contact(this.name, this.nickname, this.icon);
 }
