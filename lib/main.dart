@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
       title: 'ListView',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Contacts'),
+          title: Text('Sloths!'),
         ),
         backgroundColor: Colors.indigo[100],
         body: Home(),
@@ -28,8 +28,8 @@ class Home extends StatelessWidget {
       height: sizeY,
       child: GridView.count(
         scrollDirection: Axis.vertical,
-        crossAxisCount: 3,
-        children: createSquares(50),
+        crossAxisCount: 2,
+        children: createGallery(50),
         mainAxisSpacing: 5.0,
         crossAxisSpacing: 5.0,
         padding: EdgeInsets.all(5.0),
@@ -178,6 +178,37 @@ class Home extends StatelessWidget {
       ));
     });
     return list;
+  }
+
+  List<Widget> createGallery(int numImages) {
+    List<Widget> images = List<Widget>();
+    List<String> urls = List<String>();
+    urls.add(
+        'https://cdn.mos.cms.futurecdn.net/m8EL5jVUhEk7WWzmKJhXSW-1200-80.jpg');
+    urls.add('https://scx2.b-cdn.net/gfx/news/hires/2019/slothsarefar.jpg');
+    urls.add(
+        'https://static01.nyt.com/images/2014/01/28/science/28SLOT_SPAN/28SLOT-articleLarge.jpg?quality=75&auto=webp&disable=upscale');
+    urls.add(
+        'https://www.rainforest-alliance.org/sites/default/files/styles/750w_585h/public/2016-09/three-toed-sloth.jpg?itok=uWF-NdZZ');
+    urls.add(
+        'https://media3.s-nbcnews.com/j/streams/2013/May/130531/6C7659646-tdy-130531-sloth-tz.fit-760w.jpg');
+    urls.add(
+        'https://www.rd.com/wp-content/uploads/2016/04/sloths-slide3SamTrull.jpg');
+    Widget image;
+    int i = 0;
+    while (i < numImages) {
+      image = Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage(urls[i % 5]),
+          ),
+        ),
+      );
+      images.add(image);
+      i++;
+    }
+    return images;
   }
 }
 
